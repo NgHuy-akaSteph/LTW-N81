@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/4.6.2/css/bootstrap.min.css">
+</head>
+<body>
+
+
+<script>
+    const reset = () => {
+        document.getElementById("username").value = '';
+        document.getElementById("password").value = '';
+    }
+
+    const login = () => {
+        let username = document.getElementById("username").value;
+        let password = document.getElementById("password").value;
+        if(username === "huynq" && password === "123"){
+            alert("Xin chao, Nguyen Quang Huy");
+        }
+        else{
+            alert("Sai ten nguoi dung hoac mat khau. Vui long nhap lai")
+            reset();
+        }
+    }
+
+
+
+    //Bai 6
+    // const date = new Date();
+    // const daysOfWeek = ["Chu Nhat", "Thu Hai", "Thu Ba", "Thu Tu", "Thu Nam", "Thu Sau", "Thu Bay"];
+    //
+    // alert("Hom nay la " + daysOfWeek[date.getDay()] + ", ngay "
+    //     + date.getDate() + " thang " + date.getMonth() + 1 + " nam " + date.getFullYear() )
+
+    // Bai 8
+    // const date = new Date();
+    // let yearOfBirth = prompt("Nhap vao nam sinh cua ban: ", "2004")
+    // let yourAge = date.getFullYear() - yearOfBirth;
+    // alert("Tuoi hien tai cua ban la: " + yourAge);
+
+    //Bai 9
+    // const date = new Date();
+    // const currentYear = date.getFullYear()
+    // let yearOfBirth = currentYear;
+    // do {
+    //     yearOfBirth = prompt("Nhap nam sinh cua ban: ", "");
+    // } while (yearOfBirth > currentYear)
+    // let yourAge = date.getFullYear() - yearOfBirth;
+    // alert("Tuoi hien tai cua ban la: " + yourAge);
+
+    //Bai 11
+    // let quantity = prompt("Ban can nhap vao bao nhieu nguoi: ", "");
+    // const DS = new Array(100);
+    // for(i = 0; i < quantity; i++){
+    //     DS[i] = prompt("Nhap vao ho ten : ", "");
+    // }
+    // DS.sort();
+    // document.write("<h2>Danh sach da sap xep la </h2>");
+    // for(x in DS){
+    //     document.write(DS[x] + "<br>");
+    // }
+
+
+</script>
+</body>
+</html>
