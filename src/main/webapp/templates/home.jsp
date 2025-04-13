@@ -25,13 +25,22 @@
                 <td>${product.name}</td>
                 <td><c:out value="${product.describe}" /></td>
                 <td>
-                    <a href="${pageContext.request.contextPath}/edit/${product.id}" class="btn btn-sm btn-primary">Edit</a>
-                    <a href="${pageContext.request.contextPath}/delete/${product.id}" class="btn btn-sm btn-danger">Delete</a>
+                    <a href="update?id=${product.id}" class="btn btn-sm btn-primary">Edit</a>
+                    <a href="#"  onclick="doDelete(${product.id})" class="btn btn-sm btn-danger">Delete</a>
                 </td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
 </div>
+<script>
+    function doDelete(id){
+        if(confirm("Do you want to delete category id= '"+id+"'?")){
+            // Nhan OK -> confirm tra ve gia tri True
+            // Nhan Huy/Cancel -> confirm tra ve gia tri False
+            window.location="delete?id="+id;
+        }
+    }
+</script>
 </body>
 </html>

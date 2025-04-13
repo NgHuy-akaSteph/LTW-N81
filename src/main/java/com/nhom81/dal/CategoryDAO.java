@@ -1,6 +1,8 @@
 package com.nhom81.dal;
 
 import com.nhom81.model.Category;
+
+import java.beans.Transient;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -64,5 +66,51 @@ public class CategoryDAO extends DBContext{
             System.out.println(e);
         }
         return null;
+    }
+
+    // Delete a category
+    public void delete(int id){
+        String query = "DELETE FROM Categories WHERE id = ?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, String.valueOf(id));
+            ps.executeUpdate();
+        } catch (SQLException e){
+            System.out.println(e);
+        }
+    }
+
+    //Get category by id
+    public Category getCategoryById(int id) {
+        System.out.println(id);
+        String query = "SELECT * FROM Categories WHERE id = ?";
+        try{
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, String.valueOf(id));
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                return new Category(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("describe")
+                );
+            }
+        } catch (SQLException e){
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    public void update(Category c){
+        String query = "UPDATE Categories SET name = ?, describe = ? WHERE id = ?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, c.getName());
+            ps.setString(2, c.getDescribe());
+            ps.setInt(3, c.getId());
+            ps.executeUpdate();
+        } catch (SQLException e){
+            System.out.println(e);
+        }
     }
 }
