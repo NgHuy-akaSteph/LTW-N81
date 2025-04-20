@@ -11,12 +11,12 @@ public class Product {
     private Date releaseDate;
     private String describe;
     private String image;
-    private int cid;
+    private Category cate;
 
     public Product() {
     }
 
-    public Product(String id, String name, double price, int quantity, Date releaseDate, String describe, String image, int cid) {
+    public Product(String id, String name, double price, int quantity, Date releaseDate, String describe, String image, Category cate) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -24,7 +24,7 @@ public class Product {
         this.releaseDate = releaseDate;
         this.describe = describe;
         this.image = image;
-        this.cid = cid;
+        this.cate = cate;
     }
 
     public String getId() {
@@ -83,11 +83,11 @@ public class Product {
         this.image = image;
     }
 
-    public int getCid() {
-        return cid;
+    public Category getCate() {
+        return cate;
     }
 
-    public void setCid(int cid) {
-        this.cid = cid;
+    public void setCate(Category cate) {
+        this.cate = cate;
     }
 }

@@ -2,7 +2,6 @@ package com.nhom81.dal;
 
 import com.nhom81.model.Category;
 
-import java.beans.Transient;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
