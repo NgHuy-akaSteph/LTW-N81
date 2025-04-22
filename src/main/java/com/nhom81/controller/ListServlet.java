@@ -1,6 +1,8 @@
 package com.nhom81.controller;
 
+import com.nhom81.dal.CategoryDAO;
 import com.nhom81.dal.ProductDAO;
+import com.nhom81.model.Category;
 import com.nhom81.model.Product;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -52,8 +54,10 @@ public class ListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //Lấy số trang hiện tại và keyword tìm kiếm từ đường dẫn
-        String keyword = request.getParameter("search");
         String page_raw = request.getParameter("page");
+        String keyword = request.getParameter("search");
+        String cateId_raw = request.getParameter("category");
+
         int page = 1;
         try {
             page = Integer.parseInt(page_raw);
@@ -62,28 +66,45 @@ public class ListServlet extends HttpServlet {
         }
 
         if (keyword == null) {
-            keyword = "";
+            keyword = ""; // Lay toan bo san pham
         }
+
+        List<Product> list;
         //Lấy ra danh sách sản phẩm tìm kiếm theo keyword
         ProductDAO dao = new ProductDAO();
-        List<Product> searchList = dao.searchProductByName(keyword);
+        if(cateId_raw == null) {
+            list = dao.searchProductByName(keyword);
+        } else {
+            int cateId = 0; // Khong co category nao -> list rong
+            try {
+                cateId = Integer.parseInt(cateId_raw);
+            } catch (NumberFormatException e) {
+                System.out.println(e.getMessage());
+            }
+            list = dao.getListByCategory(cateId);
+        }
+
         //Phân trang kết quả tìm kiếm
-        int totalProducts = searchList.size();
+        int totalProducts = list.size();
         int totalPages = totalProducts / PAGE_SIZE + (totalProducts % PAGE_SIZE == 0 ? 0 : 1);
-        int start = (page - 1) * PAGE_SIZE;
-        int end;
+        int start = (page - 1) * PAGE_SIZE; //Stt trong list cua san pham dau tien trong trang
+        int end; // STT trong list cua san pham sau san pham cuoi cung trong trang ( < end)
         if (page * PAGE_SIZE > totalProducts) {
             end = totalProducts;
         } else {
             end = page * PAGE_SIZE;
         }
-        List<Product> pageList = dao.getListByPage(searchList, start, end);
+        List<Product> pageList = dao.getListByPage(list, start, end);
+        CategoryDAO categoryDAO = new CategoryDAO();
+        List<Category> categories = categoryDAO.getAll();
+
         //Gán lại giá trị cho jsp
         request.setAttribute("data", pageList);
         request.setAttribute("page", page);
         request.setAttribute("keyword", keyword);
         request.setAttribute("totalPages", totalPages);
+        request.setAttribute("categoryList", categories);
+        request.setAttribute("category", cateId_raw);
         request.getRequestDispatcher("/templates/page.jsp").forward(request, response);
-
     }
 }
